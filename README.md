@@ -2,7 +2,7 @@
 Basic command line rss reader Spring application
 
 com.tomitot:rss-reader has dependency to io.korhner:asciimg which is not in Maven central
-repository. Make sure you make it available to the rss-reader application.
+repository. asciimg project source can be found in this repository.
 
 Run com.tomitot.rss.reader.App and define -Dinput=yourRssFeed VM argument.
 Input can be link or path to RSS file.
