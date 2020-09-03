@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.rometools.rome.feed.synd.SyndEnclosure;
@@ -17,20 +15,20 @@ public class EntryPrinter {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(EntryPrinter.class);
 
-	@Value("${convertToAscii:false}")
-	private boolean convertToAscii;
-
-	@Autowired
 	private AsciiArtConverter artConverter;
-
-	@Autowired
 	private EntryTitlePrinter entryTitlePrinter;
 
-	public void printEntry(SyndEntry entry) {
+	public EntryPrinter(AsciiArtConverter artConverter, EntryTitlePrinter entryTitlePrinter) {
+		super();
+		this.artConverter = artConverter;
+		this.entryTitlePrinter = entryTitlePrinter;
+	}
+
+	public void printEntry(SyndEntry entry, boolean isArtConvertionNeeded) {
 		printTitleWithPublishedDate(entry);
 		printDescription(entry);
 		printLink(entry);
-		if(convertToAscii) {
+		if(isArtConvertionNeeded) {
 			printImage(entry);
 		}
 		LOGGER.info("");

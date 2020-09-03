@@ -17,21 +17,24 @@ public class ChannelPrinter {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ChannelPrinter.class);
 
 	@Autowired
-	private AsciiArtConverter artConverter;;
+	private AsciiArtConverter artConverter;
 
-	public void printChannel(SyndFeed feed) {
+	public void printChannel(SyndFeed feed, boolean isArtConvertionNeeded) {
 		LOGGER.info("Channel Title: " + feed.getTitle());
 		LOGGER.info("Channel Description: " + feed.getDescription());
 		DateFormat dateFormat = new SimpleDateFormat();
 		LOGGER.info("Published: " + dateFormat.format(feed.getPublishedDate()));
 
-		String url = feed.getImage().getUrl();
-		try {
-			LOGGER.info(artConverter.getImageArt(url));
-		} catch (IOException e) {
-			LOGGER.error("Image: Error 404 - " + url);
+		if(isArtConvertionNeeded) {
+			String url = feed.getImage().getUrl();
+			try {
+				LOGGER.info(artConverter.getImageArt(url));
+			} catch (IOException e) {
+				LOGGER.error("Image: Error 404 - " + url);
+			}
+		} else {
+			LOGGER.info("");
 		}
-		LOGGER.info("");
 	}
 
 }
